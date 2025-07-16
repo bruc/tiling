@@ -1,0 +1,23 @@
+This directory contains the scripts necessary to run the four PacBio
+AAV datasets referenced in the paper,
+
+The Tiling Algorithm -- A general method for structural characterization
+of accurate long DNA sequence reads: application to AAV genome sequences
+
+submitted to PlosONE.
+
+In order to rerun these scripts, you will need to download the
+sequence files from
+https://downloads.pacbcloud.com/public/dataset/AAV/ and place them
+into the directory, data, under this directory. The file, "ls-lR.txt",
+contains the output for "ls -laR" for the data files. The file,
+"files.md5", contains the output from md5sum on all the data files.
+The README.txt file in "data" was the original from Pacific Biosciences.
+
+The reference for the mixed sample (2022-ssAAV-scAAV-mix) was
+generated manually by combining the ITR sequence and the payload and
+backbones from pAV-CMV-GFP_split.fasta and scAAV_CBA_eGFP_split.fasta.
+
+The other references were taken from the files provided by PacBio.
+
+

@@ -1,0 +1,81 @@
+2021-scAAV-CBA-eGFP:
+total 16
+drwxrwxr-x. 3 bruc bruc   61 Jul 14 19:17 .
+drwxrwxr-x. 6 bruc bruc 4096 Jul 16 17:21 ..
+drwxrwxr-x. 2 bruc bruc 4096 Jul 14 20:05 1-demux
+-rw-rw-r--. 1 bruc bruc 5547 Aug  3  2021 scAAV_CBA_eGFP.fasta
+
+2021-scAAV-CBA-eGFP/1-demux:
+total 9680288
+drwxrwxr-x. 2 bruc bruc       4096 Jul 14 20:05 .
+drwxrwxr-x. 3 bruc bruc         61 Jul 14 19:17 ..
+-rw-rw-r--. 1 bruc bruc        416 Jul 20  2022 barcodes.fasta
+-rw-rw-r--. 1 bruc bruc 1377220992 Mar  7 16:39 demux.bc1001--bc1001.fasta
+-rw-rw-r--. 1 bruc bruc 1316855718 Mar  7 16:39 demux.bc1002--bc1002.fasta
+-rw-rw-r--. 1 bruc bruc 1007884929 Mar  7 16:39 demux.bc1003--bc1003.fasta
+-rw-rw-r--. 1 bruc bruc  937395416 Mar  7 16:39 demux.bc1008--bc1008.fasta
+-rw-rw-r--. 1 bruc bruc 1236153314 Mar  7 16:39 demux.bc1009--bc1009.fasta
+-rw-rw-r--. 1 bruc bruc 1282039309 Mar  7 16:39 demux.bc1010--bc1010.fasta
+-rw-rw-r--. 1 bruc bruc 1510829106 Mar  7 16:40 demux.bc1011--bc1011.fasta
+-rw-rw-r--. 1 bruc bruc 1244212466 Mar  7 16:40 demux.bc1012--bc1012.fasta
+-rw-rw-r--. 1 bruc bruc        293 Jul 20  2022 demux.lima.counts
+
+2022-ssAAV-pAV-CMF-GFP:
+total 12
+drwxrwxr-x. 3 bruc bruc   58 Jul 14 19:17 .
+drwxrwxr-x. 6 bruc bruc 4096 Jul 16 17:21 ..
+drwxrwxr-x. 2 bruc bruc   59 Jul 14 20:06 0-reads
+-rw-rw-r--. 1 bruc bruc 5127 Jun 30  2022 pAV-CMV-GFP.fasta
+
+2022-ssAAV-pAV-CMF-GFP/0-reads:
+total 2191184
+drwxrwxr-x. 2 bruc bruc         59 Jul 14 20:06 .
+drwxrwxr-x. 3 bruc bruc         58 Jul 14 19:17 ..
+-rw-rw-r--. 1 bruc bruc 2243770737 Mar  7 20:28 m64011_220616_211638.hifi_reads.fasta
+
+2022-ssAAV-scAAV-mix:
+total 32
+drwxrwxr-x. 3 bruc bruc   123 Jul 14 19:19 .
+drwxrwxr-x. 6 bruc bruc  4096 Jul 16 17:21 ..
+drwxrwxr-x. 2 bruc bruc    59 Jul 14 20:06 0-reads
+-rw-rw-r--. 1 bruc bruc 10609 May  1  2022 mixedAAV_genome.fasta
+-rw-rw-r--. 1 bruc bruc  5127 Jul 20  2022 pAV-CMV-GFP.fasta
+-rw-rw-r--. 1 bruc bruc  5547 Jul 20  2022 scAAV_CBA_eGFP.fasta
+
+2022-ssAAV-scAAV-mix/0-reads:
+total 1142428
+drwxrwxr-x. 2 bruc bruc         59 Jul 14 20:06 .
+drwxrwxr-x. 3 bruc bruc        123 Jul 14 19:19 ..
+-rw-rw-r--. 1 bruc bruc 1169842793 Mar  7 16:40 m64012_220203_214130.hifi_reads.fasta
+
+2023-Revio-ssAAV-pAV-CMF-GFP:
+total 12
+drwxrwxr-x. 4 bruc bruc   71 Jul 14 19:19 .
+drwxrwxr-x. 6 bruc bruc 4096 Jul 16 17:21 ..
+-rw-rw-r--. 1 bruc bruc 5127 Aug  8  2024 pAV-CMV-GFP.fasta
+drwxrwxr-x. 3 bruc bruc   21 Jul 14 19:20 rep1
+drwxrwxr-x. 3 bruc bruc   29 Jul 14 20:07 rep2
+
+2023-Revio-ssAAV-pAV-CMF-GFP/rep1:
+total 0
+drwxrwxr-x. 3 bruc bruc 21 Jul 14 19:20 .
+drwxrwxr-x. 4 bruc bruc 71 Jul 14 19:19 ..
+drwxrwxr-x. 2 bruc bruc 62 Jul 14 20:06 0-reads
+
+2023-Revio-ssAAV-pAV-CMF-GFP/rep1/0-reads:
+total 4293548
+drwxrwxr-x. 2 bruc bruc         62 Jul 14 20:06 .
+drwxrwxr-x. 3 bruc bruc         21 Jul 14 19:20 ..
+-rw-rw-r--. 1 bruc bruc 4396591376 Mar  7 16:40 m84026_231030_220704_s3.hifi_reads.fasta
+
+2023-Revio-ssAAV-pAV-CMF-GFP/rep2:
+total 0
+drwxrwxr-x. 3 bruc bruc 29 Jul 14 20:07 .
+drwxrwxr-x. 4 bruc bruc 71 Jul 14 19:19 ..
+drwxrwxr-x. 2 bruc bruc 62 Jul 14 20:07 0-reads
+
+2023-Revio-ssAAV-pAV-CMF-GFP/rep2/0-reads:
+total 7270180
+drwxrwxr-x. 2 bruc bruc         62 Jul 14 20:07 .
+drwxrwxr-x. 3 bruc bruc         29 Jul 14 20:07 ..
+-rw-rw-r--. 1 bruc bruc 7444663642 Mar  7 16:41 m84028_231102_045756_s2.hifi_reads.fasta

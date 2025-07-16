@@ -1,0 +1,46 @@
+How to run the tiling algorithm.
+
+Robert Bruccoleri
+bruc@acm.org
+
+Running the tiling algorithm requires installing Bio::Frescobi and its
+prerequisites. Bio::Frescobi is available on Github
+(https://github.com/bruc/Bio-Frescobi) and will eventually be added to
+CPAN. You will also need to define the environment variable,
+BUILD_PREFIX, which is where the prerequisites for Bio::Frescobi are
+found.
+
+It's also important to know how to read Bash scripts -- the scripts
+that are included with this Git repository are very instructive if you
+can understand them.
+
+The best way to proceed is to start with the example scripts and
+specifically, example/scripts/run_tiling_2021-scAAV-CBA-eGFP.sh. This
+example shows how to process eight samples.
+
+There are several variables that control the execution of the
+script. Here's the list:
+
+d_path    The location of the CCS reads to be analyzed.
+fa_s	  The list of reference sequences that are expected to be found in the samples being sequenced.
+names	  The corresponding names for the reference sequences. These names must be in the same order
+	  and number as the fa_s variable.
+barcodes  A colon separated list of barcodes used in the sequencing run.
+templates The corresponding list of references (by name) for each barcode, colon separated.
+run	  The database name.
+tiling_d  Where the tiling results are supposed to go.
+scriptdir The folder containing the tile.pl script.
+
+------------------------------------------------
+
+The script, example/scripts/convert_dna.sh, is used to split the
+sequence of a plasmid used to make an AAV into three parts, the ITR,
+the payload, and the backbone. It depends upon a Perl script,
+reformat_viral_plasmid.pl, that looks for the ITR sequence and then
+performs the division.
+
+It is important for the execution of the tiling algorithm that the
+reference not contain repeated sequences. If they are found, they need
+to be split from the unique sequences. Examples are in
+example/references in files whose name ends in "_split.fasta".
+
