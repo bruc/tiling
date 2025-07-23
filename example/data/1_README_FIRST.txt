@@ -2,4 +2,5 @@ This directory is a stub for the data files used to run the example from the til
 
 The README.txt file is a copy of the README.txt from PacBio's web site,  https://downloads.pacbcloud.com/public/dataset/AAV/, which contains all the AAV sequences used in this example.
 
-The file, ls-lR.txt, contains the listing of the files used in running the examples, and the file, files.md5, contains the MD5 checksum to check for any differences from what was used for the tiling algorithm paper.
+Please see the README file in the parent directory for the explanation of the files, ls-lR.txt and files.md5.
+
