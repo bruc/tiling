@@ -1224,3 +1224,263 @@ sub output_components {
 	}
     }
 }
+
+=head1 NAME
+
+tile.pl - Find one dimensional tiling patterns of reads using a set of reference sequences.
+
+=head1 SYNOPSIS
+
+ tile.pl -library=<string>
+         -db=<string>
+       [ -gap_limit=<integer>      ]
+       [ -max_iter=<integer>       ]
+       [ -dbname=<string>          ]
+       [ -driver=<string>          ]
+       [ -[no]consolidate          ]
+       [ -other_db=<string>...     ]
+       [ -limit=<integer>          ]
+       [ -min_gap_seq=<integer>    ]
+       [ -min_gap_search=<integer> ]
+       [ -min_poly=<integer>       ]
+       [ -[no]by_strand            ]
+       [ -end_gap=<integer>        ]
+       [ -write_seq_limit=<integer>]
+       [ -[no]raw                  ]
+       [ -[no]debug                ]
+       [ -fastq=<file>             ]
+       [ -[no]by_component         ]
+       [ -[no]add_gaps             ]
+       [ -[no]quant_homopolymers   ]
+       [ -[no]details              ]
+       [ -[no]add_unknowns         ]
+
+    The library and db options must be specified.
+
+    Defaults:
+      gap_limit is 30.
+      max_iter is 100000.
+      dbname is 'itrext'
+      driver is 'Pg'
+      consolidate is false
+      other_db is empty.
+      limit is 0
+      min_gap_seq is 6
+      min_gap_search is 11
+      min_poly is 50
+      by_strand is false
+      end_gap is 0
+      write_seq_limit is 0
+      debug is false
+      raw is true
+      fastq is empty string
+      by_component is false
+      add_gaps is false
+      quant_homopolymers is true
+      details is false
+      add_unknowns is false
+
+=head1 DESCRIPTION
+
+The C<tile.pl> script implements the tiling algorithm described in the
+paper, "The Tiling Algorithm -- A general method for structural
+characterization of accurate long DNA sequence reads: application to
+AAV genome sequences", which has been submitted to Plos One and is
+available as a preprint on BioRxiv:
+https://www.biorxiv.org/content/10.1101/2025.07.25.666743v1
+
+The purpose of the tiling algorithm is to answer the question, "What
+is the composition of every read in a DNA sequencing experiment?" It
+was originally written to interpret the results of long read
+sequencing of adeno-associated viral (AAV) genomes.
+
+The script depends upon a Frescobi database which is prepopulated with
+the reads from the sequencing experiment along with Blast annotations
+against the sequence of reference DNA molecules that are expected to
+comprise the reads. The Github repository with this script also
+contains shell scripts that illustrate the construction of the
+Frescobi database using some representative datasets from Pacific
+Biosciences.
+
+The High Scoring Pairs (HSPs) from the Blast analysis are used to
+define the tiles that cover each read.
+
+Many files are generated as output from this script. See the paper for
+a description of the file types.
+
+=head1 ARGUMENTS AND OPTIONS
+
+=over 4
+
+=item C<< -library=<string> >>
+
+Specifies the library in the Frescobi database of sequences to be
+analyzed. It is expected that each sample being sequenced will be
+loaded into separate libraries. When samples are barcoded, it a
+reasonable practice to use the barcode name as the library name.
+
+=item C<< -db=<string> >>
+
+Specifies the reference sequence database used for the primary
+identification of tile components. For example, if one were making
+AAV's that code for Green Fluorescent Protein, then the reference
+sequence would be the plasmid used to make AAV in cell line. The
+reference sequence database would need to be composed of three
+sequences, the ITR, the payload between the ITR's the codes for GFP
+and the remaining plasmid sequence, typically labeled as the backbone.
+
+=item C<< -gap_limit=<integer> >>
+
+The maximum size of a gap between two HSP's aligned against a
+read. Gaps bigger than this number imply that the read has an
+unidentified section.
+
+=item C<< -max_iter=<integer> >>
+
+The maximum number of search steps allowed in the recursive,
+exhaustive search for the best tiling pattern.
+
+=item C<< -dbname=<string> >>
+
+The name of the Postgres or SQLite database that holds the sequences
+and annotations used for tiling.
+
+=item C<< -driver=<string> >>
+
+The choice of database software used for storing the sequences and
+annotations. Only two choices are available, "Pg" for Postgres and
+"SQLite".
+
+=item C<< -[no]consolidate >>
+
+Apply some simple rules to consolidate different tiling patterns into
+common ones. See the code the details.
+
+=item C<< -other_db=<string>... >>
+
+This option specifies other references to be used to generate tiling
+patterns when the primary reference in the C<-db> option fails to
+cover a read.  Multiple databases can be specified.
+
+This option is useful to identify other helper plasmid sequences or
+the host cell DNA, but it's important to consider
+feasibility. Blasting a million AAV genome reads against the human
+genome can take a very long time.
+
+=item C<< -limit=<integer> >>
+
+If non-zero, this option will limit the number of reads to the limit
+value being analyzed. It is useful for testing the overall tiling
+process on a subset of reads.
+
+=item C<< -min_gap_seq=<integer> >>
+
+This option specifies the minimum gap size for reporting in the file ending in ".gap.seq"
+
+=item C<< -min_gap_search=<integer> >>
+
+This item specifies the minimum gap size for using the alternative
+references specified by the C<-other_db> option. Thus, very small gaps
+will not be searched.
+
+=item C<< -min_poly=<integer> >>
+
+This option specifies the minimum length homopolymer for each the
+script will generate an artificial HSP consisting of said
+homopolymer. This is useful when sequence library preparation involves
+the use of polyadenylation enzymes.
+
+=item C<< -[no]by_strand >>
+
+If heteroduplex discovery is used for the Circular Consensus
+Algorithm, specifying this option will result in additional analysis
+by ZMW (Zero Mode Waveguide). The script will combine sequences coming
+from the same DNA molecule, but from opposite strands and will report
+the combination of the two.
+
+=item C<< -end_gap=<integer> >>
+
+This option specifies the length of the allowable unidentified
+sequence at the end of the read, both 5' and 3' ends.
+
+=item C<< -write_seq_limit=<integer> >>
+
+If this option is greater than zero, the script will generate files
+containing all the reads for the most common tiling patterns up to the
+C<write_seq_limit>. This is useful for searching for small
+variants. The sequences will be written in a folder hierarchy starting
+with a folder name of the C<library> option concatenated with ".seqs".
+
+=item C<< -[no]raw >>
+
+In the context of the C<-write_seq_limit> option being used, the
+C<raw> option specifies that all sequences from the sequencer will be
+output. If C<noraw> is specified, then only the unique sequences will
+be output if no Fastq file information is available. The header lines
+will contain the number of occurrences of each read.
+
+=item C<< -[no]debug >>
+
+Turn on debugging output.
+
+=item C<< -fastq=<file> >>
+
+In the context of the C<-write_seq_limit> option being used, this
+option specifies that the output of reads by tiling code will be in
+Fastq format and this file will be used as the source.
+
+The use of this option will require main memory in excess of the size
+of the Fastq file, so please take that into consideration.
+
+=item C<< -[no]by_component >>
+
+If this option is true and C<-write_seq_limit> is non-zero, the output
+read sequences will be split by the tiling pattern. This approach
+allows for sequence identity checking on a component basis.
+
+=item C<< -[no]add_gaps >>
+
+If this option is set and C<-write_seq_limit> is non-zero, the
+sequences of the gaps in the tiling pattern will be written to the
+component sequence files.  If one of the components around a gap is an
+ITR and one is not, then assign the gap to the non-ITR piece. If both
+components are ITR's, then split the gap in the middle.
+
+=item C<< -[no]quant_homopolymers >>
+
+If this option is true, the homopolymer HSP's will include the length
+of the homopolymer. If the option is false, it will not. Setting this
+option to false is useful in the case of library preparations that use
+polyadenylation because the length of the poly A tract is not
+consistent, and thus, it doesn't make sense to count differences in
+length.
+
+=item C<< -[no]details >>
+
+If this option is true, output more information about the tiling process.
+
+=item C<< -[no]add_unknowns >>
+
+If this option is true, additional artificial HSP's labeled as
+"unknown" will be added for gaps in the alignments.
+
+=back
+
+=head1 CITATION
+
+Robert E. Bruccoleri, David Rouleau, Celia Slater, Dimpal Lata,
+Christopher Phillion, Samuel Adjei, Kiran Adhikari, Serena
+Dollive. "The Tiling Algorithm -- A general method for structural
+characterization of accurate long DNA sequence reads: application to
+AAV genome sequences." submitted to Plos ONE.
+
+=head1 SEE ALSO
+
+Bio::Frescobi (https://github.com/bruc/Bio-Frescobi)
+
+=head1 AUTHOR
+
+Robert Bruccoleri <bruc@congen.com>
+Congenomics, LLC.
+
+=cut
